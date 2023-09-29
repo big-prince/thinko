@@ -8,6 +8,9 @@
     <script src="https://kit.fontawesome.com/6dcb090a5e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Lj5ghO5U5bC4C4vKf5b5b5Vv5b5b5Vv5b5b5Vv5b5b5Vv5b5b5" crossorigin="anonymous">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dosis:wght@200;300;400;500;600;700;800&family=Fjalla+One&family=Fjord+One&family=Montserrat:wght@100;200&family=Mooli&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dosis:wght@200;300;400;500;600;700;800&family=Fjalla+One&family=Fjord+One&family=Montserrat:wght@100;200&family=Mooli&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:wght@700&family=Young+Serif&display=swap');
+
         /* Custom styles for the header */
         header {
             background-color: white;
@@ -40,7 +43,7 @@
         }
 
         .update-profile-button {
-            background: linear-gradient(135deg, #ff6b81, #62d8f1);
+            background: linear-gradient(160deg, #42abfb, #05518b);
             color: white;
             border: none;
             border-radius: 5px;
@@ -51,9 +54,8 @@
         }
 
         .update-profile-button:hover {
-            background: linear-gradient(135deg, #ff4b64, #4ea6e9);
+            background: linear-gradient(160deg, #42abfb, #05518b);
         }
-
         /* Custom styles for the main content */
         .content {
             background-color: white;
@@ -116,8 +118,11 @@
             color: #777;
         }
 
+        button {
+            font-family: 'Mooli', sans-serif ;
+        }
         .start-quiz-button {
-            background: linear-gradient(120deg, #ff6b81, #62d8f1);
+            background: linear-gradient(160deg, #42abfb, #05518b);
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -147,7 +152,7 @@
         }
 
         .start-quiz-button:hover {
-            background: linear-gradient(135deg, #ff4b64, #4ea6e9);
+            background: linear-gradient(160deg, #42abfb, #05518b);
             transform: scale(1.1);
         }
         /* ... Rest of the styling remains the same ... */
@@ -155,7 +160,7 @@
 
         .new-quiz-button {
             /* background: linear-gradient(135deg, #05175b, #f8cd22); */
-            background-color: rgb(64, 121, 236);
+            background-color: #05518b;
             color: white;
             border: none;
             border-radius: 10px;
@@ -169,7 +174,7 @@
         }
 
         .new-quiz-button:hover {
-            background: linear-gradient(135deg, #ff4b64, #4ea6e9);
+            background: linear-gradient(180deg, #42abfb, #05518b);
         }
 
         /* Line animation around the content */
@@ -231,7 +236,7 @@
     }
 
     .popup button {
-        background: linear-gradient(135deg, #ff6b81, #62d8f1);
+        background: linear-gradient(160deg, #42abfb, #05518b);
             color: white;
             border: none;
             border-radius: 5px;
@@ -254,11 +259,11 @@
     
     </style>
 </head>
-<body>
+<body style="font-family: 'Young Serif', sans-serif;font-weight: 100;">
     <header>
         <div class="header-left">
             <div class="user-info">
-                <span class="user-name">Welcome: <%=name%>(<span style="font-size: 15px;font-family:cursive;">@<%=username%></span>)</span><br>
+                <span class="user-name">Welcome: <%=name%>(<span style="font-size: 15px;;">@<%=username%></span>)</span><br>
                 <a href="/logout"><button class="update-profile-button" style="margin-top: 1rem;" >Logout</button> </a>
             </div>
         </div>
@@ -275,12 +280,12 @@
         <ul class="quiz-list">
             <% quizzes.forEach((quiz, index) => { %>
                 <li style="text-decoration: none; list-style: none; margin-left: -2.5rem;">
-                    <div class="quiz-card" style="background-color: rgba(215, 45, 150, 0.3);">
-                        <h3 id="main-quiz-name-<%= index %>"><%= quiz.name %></h3>
-                        <p><%= quiz.description %></p>
+                    <div class="quiz-card" style="background-color: rgba(45, 133, 215, 0.411)">
+                        <h3 id="main-quiz-name-<%= index %>">Quiz: <%= quiz.name %></h3>
+                        <p>Description: <%= quiz.description %></p>
                         <button class="start-quiz-button" id="start-quiz-button-<%= index %>">Start Quiz</button>
                         <!--Share quiz Button-->
-                        <button class="share-quiz-button" id="share-quiz-button-<%= index %>">Share Quiz</button>
+                        <!-- <button class="share-quiz-button" id="share-quiz-button-<%= index %>">Share Quiz</button> -->
                         <!-- //delete quiz button -->
                         <button class="delete-quiz-button" id="delete-quiz-button-<%= index %>">Delete Quiz</button>
                     </div>
@@ -750,6 +755,9 @@
             quizPopup.style.display = 'block';
 
             newCard.style.display='block'
+             //show the alert that for quiz created
+             const createdAlert = document.querySelector('.created-alert')
+                createdAlert.style.display = 'none'
         })
         
         //send to backend function
@@ -793,6 +801,9 @@
 
 
             questionNext.style.display = 'none'
+             //show the alert that for quiz created
+             const createdAlert = document.querySelector('.created-alert')
+                createdAlert.style.display = 'none'
 
         })
         
