@@ -155,10 +155,10 @@
 
         .new-quiz-button {
             /* background: linear-gradient(135deg, #05175b, #f8cd22); */
-            background-color: rgb(0, 0, 0);
+            background-color: rgb(64, 121, 236);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 10px;
             font-family: monospace;
             padding: 10px 20px;
             font-size: 2.5rem;
@@ -262,11 +262,11 @@
                 <a href="/logout"><button class="update-profile-button" style="margin-top: 1rem;" >Logout</button> </a>
             </div>
         </div>
-        <h1 class="header-title">Thinko</h1>
+        <a href="/home" style="text-decoration: none; color: inherit;"><h1 class="header-title">Thinko</h1></a> 
         <div class="search-bar">
             <!-- change font awesome icon to button -->
-            <button class="search-icon"><i class="fas fa-search search-icon"></i></button>
-            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-icon" style="border-style: none;cursor: pointer;"><i class="fas fa-search search-icon"></i></button>
+            <input type="text" class="search-input" placeholder="Search Quiz Name...">
         </div>
     </header>
     <div class="content">
@@ -389,6 +389,11 @@
                     </div>
                 </div>
                 <button type="button" id="question-next">Next</button>
+                <!-- alert to show that quiz is created -->
+                <div class="created-alert">
+                    <h2>Success, Quiz Created.</h2>
+                    <h2>Reload.</h2>
+                </div>
             </div>
           
     </div>
@@ -837,6 +842,9 @@
             //for when number of questions exhausted
             if(displayArray.length > totalNO){
                 questionFormat.style.display = 'none'
+                //show the alert that for quiz created
+                const createdAlert = document.querySelector('.created-alert')
+                createdAlert.style.display = 'block'
             }
 
 

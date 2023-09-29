@@ -668,10 +668,18 @@ exports.search = async (req, res)=>{
         console.log('Search not received')
     }
     //find the quiz by database
-    const quiz = await QUIZ.find({username: req.session.user.username, 'quiz.name': search})
+    const quiz = await QUIZ.find({username: req.session.user.username, 'quiz.name': {$regex: new RegExp(search, 'i')}})
     if(!quiz){
         console.log('Quiz not found')
     }
-    console.log(quiz)
-    res.status(200).json({message: 'Quiz found'})
+    //send the quizNAme and description like others to the frontend
+    //map quiz
+    const mapQuiz = quiz.map(quiz =>({
+        name: quiz.quiz.name,
+        description: quiz.quiz.description
+    }))
+
+    //send to frontend
+    res.status(200).json({message: mapQuiz})
+    
 }
