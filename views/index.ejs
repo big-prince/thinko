@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/styles.css">
+    <script src="https://kit.fontawesome.com/6dcb090a5e.js" crossorigin="anonymous"></script>
+    <title>Thinko | Login</title>
+</head>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff6b81, #62d8f1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.header h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column; /* Vertically align content */
+  padding: 20px;
+  z-index: 1000; /* Add some spacing around the content */
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-right: 6rem;
+}
+
+
+
+.form-container {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    width: 110%;
+    box-shadow: 0px 0px 15px 0px #000;
+    transition: transform 0.2s;
+    margin-left: -2rem;
+
+}
+
+.form-container signup-container {
+    display: none;
+}
+
+.form-container h2 {
+    margin: 0;
+    color: #333;
+}
+.form-container a {
+  color:  #d5ad0a;
+  text-align: center; /* Center align text */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+.glow-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #ff6b81, #62d8f1);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.glow-button:hover {
+    background: linear-gradient(135deg, #ff4b64, #4ea6e9);
+    box-shadow: 0px 0px 15px 0px #000;
+}
+
+/* .login-container {
+    transform: translateX(-100%);
+} */
+
+/* .signup-container {
+    transform: translateX(100%);
+} */
+
+.container.active .login-container {
+    transform: translateX(0);
+}
+
+.container.active .signup-container {
+    transform: translateX(0);
+}
+
+/* Styles for the backdrop blur */
+.backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 9998;
+      display: none;
+    }
+
+    /* Styles for the popup */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+      display: none;
+    }
+
+    .popup h2 {
+      margin-top: 0;
+    }
+
+    .popup input[type="password"] {
+      margin: 10px 0;
+      padding: 8px;
+    }
+
+    .popup button {
+      padding: 8px 20px;
+      background:  #052742;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+</style>
+<body>
+    <header>
+        <h1 style="align-items: center;color:  white;display: flex;font-size: 3rem;padding-right: 5rem;
+        font-size: 9.5rem;
+        margin-left: 2rem;
+        ">Welcome to Thinko</h1>
+    </header>
+    <div class="container">
+        <div class="form-container login-container" id="login-card">
+            <h2>Login <i class="fa-sharp fa-solid fa-arrow-right-to-bracket"></i></h2>
+            <form action="#" method="POST">
+                <input type="text" placeholder="Username" id="login-username" required>
+                <input type="password" placeholder="Password" id="login-password" required>
+                <button class="glow-button" id="loginBtn">Login</button>
+                <p>Don't have an account? <a href="" id="signup-link">Sign Up</a></p>
+            </form>
+        </div>
+        <div class="form-container signup-container"  id="signup-card" style="display: none;">
+            <h2>Create an Account <i class="fa-solid fa-user-plus" ;"></i></h2>
+            <form action="#" method="POST">
+                <input type="text" placeholder="Name" name="name" id="signup-name" required>
+                <input type="text" placeholder="Username" name="username" id="signup-username" required>
+                <input type="password" placeholder="Password"  name="password" id="signup-password" required>
+                <button class="glow-button" id="signupBtn">Sign Up</button>
+                <p>Already have an account? <a href="" id="login-link">Login</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    const loginCard = document.getElementById('login-card');
+    const signupCard = document.getElementById('signup-card');
+    const signupLink = document.getElementById('signup-link');
+    const loginLink = document.getElementById('login-link');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginBtn = document.getElementById('loginBtn');
+
+    //code to show login or signup
+    function showLoginForm() {
+    loginCard.style.display = 'block';
+    signupCard.style.display = 'none';
+     }
+
+    function showSignupForm() {
+    loginCard.style.display = 'none';
+    signupCard.style.display = 'block';
+    }
+
+
+    // Event listeners to show login or signup forms
+    signupLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    showSignupForm();
+    });
+
+    loginLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    showLoginForm();
+     });
+
+    
+    //signup Button submit
+    signupBtn.addEventListener('click', async(e)=>{
+        e.preventDefault()
+
+        //fetch api
+        const sName = document.getElementById('signup-name');
+        const sUsername = document.getElementById('signup-username');
+        const sPassword = document.getElementById('signup-password');
+
+        //url and api
+        const url = '/signup'
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                name: sName.value,
+                username: sUsername.value,
+                password: sPassword.value
+            })
+        })
+
+        const data = await response.json()
+        if(response.ok){
+            window.location.href = '/home'
+        }
+    })
+
+    //login handler
+    loginBtn.addEventListener('click', async(e)=>{
+        e.preventDefault()
+
+        //require inputs
+        const loginUsername = document.getElementById('login-username');
+        const loginPassword = document.getElementById('login-password')
+
+        //fetch api
+        const url = '/login'
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                username: loginUsername.value,
+                password: loginPassword.value
+            })
+        });
+
+        const data = await response.json()
+        if(response.ok){
+            window.location.href = '/home'
+        }
+    })
+</script>
+</html>

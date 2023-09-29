@@ -1,0 +1,80 @@
+<!--Build a html page with inner styling to render the unique quiz with background almost same with the home page but this time showng jus one quiz-->
+<!--The quiz should be shown with the questions and options and the user should be able to select the options and submit the quiz-->
+<!--The quiz should be submitted to the server and the server should return the score of the user and the correct answers-->
+<!--The user should be able to see the score and the correct answers-->
+<!--The user should be able to go back to the home page from the unique quiz page-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <link rel="stylesheet" type="text/css" href="css/uniqueQuiz.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quiz: <span class="quizName"><%= quizName%></span></h1>
+        </div>
+        <div class="content">
+            <div class="quiz">
+                <h3 >Question:<span id="backend-question"></span>?</h3>
+                <div class="quiz-options">
+                      <div class="options">
+                          <input type="radio" class="quiz-radio" id="option1" name="quizOption" value="Option 1">
+                          <label class="quiz-label" for="option1" id="option1"><span id="backend-o1"></span> </label>
+                      </div>
+
+                      <div class="options">
+                          <input type="radio" class="quiz-radio" id="option2" name="quizOption" value="Option 2">
+                          <label class="quiz-label" for="option2" id="option2"><span id="backend-o2"></span></label> 
+                      </div>
+
+                      <div class="options">
+                          <input type="radio" class="quiz-radio" id="option3" name="quizOption" value="Option 3">
+                          <label class="quiz-label" for="option3" id="option3"><span id="backend-o3"></span></label>
+                      </div>
+
+                      <div class="options">
+                          <input type="radio" class="quiz-radio" id="option3" name="quizOption" value="Option 3">
+                          <label class="quiz-label" for="option4" id="option3"><span id="backend-o4"></span><label>
+                      </div>
+                  
+                </div>
+            </div>
+                <button id="nextQuestionButton">Submit</button>
+                <button id="submitButton" style="display: none;">Submit</button>
+          </div>
+    <script>
+        //make next button to change the quiz
+        var nextButton = document.getElementById("nextQuestionButton");
+        var submitButton = document.getElementById("submitButton");
+        var quizName = document.getElementsByClassName("quizName")[0].innerHTML;
+
+        //event listener for nextbutton
+        nextButton.addEventListener('click', async(e)=>{
+            e.preventDefault()
+
+             //
+             const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+            if(!selectedOption){
+                console.log('Nothing Chosen')
+            }
+            const label = document.querySelector(`label[for="${selectedOption.id}"]`);
+            //send request to backend to get questions and options
+            const url = '/quiz/:quizName/submit'
+            //send frontend fetch request
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials:"include",
+                body: JSON.stringify({
+                    answer: label.textContent,
+                    index: index
+                })
+            })
+            const data = await response.json()
+        })
+    </script>
+ </body>           
+</html>
