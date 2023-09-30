@@ -27,10 +27,6 @@ router.post('/quiz', authToken.authenticateToken, userController.sendQuiz)
 router.post('/answer', authToken.authenticateToken, userController.scoreHandler)
 //delete quizzes
 router.post('/delete', authToken.authenticateToken, userController.deleteQuiz)
-//access unique quiz
-router.get('/quiz/:quizName', authToken.authenticateToken, userController.uniqueQuiz)
-//recieve answers for unique quiz
-router.post('/quiz/:quizName/submit', authToken.authenticateToken, userController.uniqueScoreHandler)
 //post search route
 router.post('/search', authToken.authenticateToken, userController.search)
 

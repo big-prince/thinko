@@ -271,7 +271,7 @@
         <div class="search-bar">
             <!-- change font awesome icon to button -->
             <button class="search-icon" style="border-style: none;cursor: pointer;"><i class="fas fa-search search-icon"></i></button>
-            <input type="text" class="search-input" placeholder="Search Quiz Name...">
+            <input type="text" class="search-input" placeholder="Search Any Quiz Name...">
         </div>
     </header>
     <div class="content">
@@ -281,7 +281,7 @@
             <% quizzes.forEach((quiz, index) => { %>
                 <li style="text-decoration: none; list-style: none; margin-left: -2.5rem;">
                     <div class="quiz-card" style="background-color: rgba(45, 133, 215, 0.411)">
-                        <h3 id="main-quiz-name-<%= index %>">Quiz: <%= quiz.name %></h3>
+                        <h3>Quiz: <span id="main-quiz-name-<%= index %>"><%= quiz.name %></span></h3>
                         <p>Description: <%= quiz.description %></p>
                         <button class="start-quiz-button" id="start-quiz-button-<%= index %>">Start Quiz</button>
                         <!--Share quiz Button-->
@@ -503,6 +503,8 @@
             })
            
         });
+        //custom function
+        
 
         //for all delete buttons
         document.querySelectorAll(".delete-quiz-button").forEach((button, index) => {
@@ -532,37 +534,6 @@
                 const data = await response.json()
                 console.log(data.message)
                 location.reload()
-            })
-           
-        });
-
-
-        //handle req.param quiz section
-        
-
-        //share quiz for all buttons
-        document.querySelectorAll(".share-quiz-button").forEach((button, index) => {
-            
-            // Construct the unique ID for the associated quiz name
-            const mainQuizName = document.getElementById(`main-quiz-name-${index}`);
-            
-            //quiz button to show popup
-            button.addEventListener('click', async(e)=>{
-                e.preventDefault();
-    
-            const quizName = mainQuizName.textContent
-            const quizUrl = `/quiz/${quizName}`
-
-
-            //copy to clipboard
-            navigator.clipboard.writeText(quizUrl)
-            .then(() => {
-                alert('Copied to clipboard')
-                console.log('Copied to clipboard');
-            })
-            .catch(err => {
-                console.log('Something went wrong', err);
-            });
             })
            
         });
@@ -714,17 +685,75 @@
                 quizList.innerHTML += `
                 <li style="text-decoration: none; list-style: none; margin-left: -2.5rem;">
                     <div class="quiz-card" style="background-color: rgba(215, 45, 150, 0.3);">
-                        <h3 id="main-quiz-name-${index}">${quiz.name}</h3>
-                        <p>${quiz.description}</p>
+                        <h3>Quiz: <span id="main-quiz-name-${index}">${quiz.name}</span></h3>
+                        <p>Description: ${quiz.description}</p>
                         <button class="start-quiz-button" id="start-quiz-button-${index}">Start Quiz</button>
-                        <!--Share quiz Button-->
-                        <button class="share-quiz-button" id="share-quiz-button-${index}">Share Quiz</button>
-                        <!-- //delete quiz button -->
-                        <button class="delete-quiz-button" id="delete-quiz-button-${index}">Delete Quiz</button>
                     </div>
                 </li>
             `
             })
+
+            //make the search result buttons work
+            document.querySelectorAll(".start-quiz-button").forEach((button, index) => {
+            
+                // Construct the unique ID for the associated quiz name
+                const mainQuizName = document.getElementById(`main-quiz-name-${index}`);
+                
+                //quiz button to show popup
+                button.addEventListener('click', async(e)=>{
+                    e.preventDefault();
+        
+                    //show popup
+                    backdrop.style.display = 'block';
+                    quizPopup.style.display = 'block';
+        
+                    //send request to backend to get questions and options
+                    const url = '/quiz'
+        
+                    //send frontend fetch request
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        credentials:"include",
+                        body: JSON.stringify({
+                            quizName: mainQuizName.textContent,
+                            index: index
+                        })
+                    })
+                    const data = await response.json()
+        
+                    //check what data reads
+                    console.log(data.question)
+                    //put the question into the element
+                    const spanID = document.getElementById('backend-question');
+                    //update the questions
+                    spanID.textContent = data.question
+        
+                    //update the options and quizName
+                    const quizName = document.getElementById('backend-quizName')
+                    const spanOptions = {
+                        option1: document.getElementById('backend-o1'),
+                        option2: document.getElementById('backend-o2'),
+                        option3: document.getElementById('backend-o3'),
+                        option4: document.getElementById('backend-o4'),
+                    }
+                    //enter values
+                    quizName.textContent = data.quizName
+                    spanOptions.option1.textContent = data.options.option1
+                    spanOptions.option2.textContent = data.options.option2
+                    spanOptions.option3.textContent = data.options.option3
+                    spanOptions.option4.textContent = data.options.option4
+                    //enter the total number of questions
+                    const totalQ = document.querySelector('.allQuestions')
+                    totalQ.textContent = data.questionLength
+                })
+               
+            });
+            
+           
+
         })
 
         //end quiz button

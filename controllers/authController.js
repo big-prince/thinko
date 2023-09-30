@@ -134,7 +134,7 @@ let length
 exports.sendQuiz = async (req, res)=>{
     //load the quiz name
     const quizName = req.body
-   
+   console.log(quizName)
     index = 0
     try {
         let arrayQ = []
@@ -301,6 +301,7 @@ exports.scoreHandler = async(req, res)=>{
     } catch (error) {
         answerArray.length = 0
         console.log('Quiz End')
+        console.log(error)
     }
     
 }
@@ -485,182 +486,6 @@ exports.deleteQuiz = async (req, res)=>{
     res.status(200).json({message: 'Quiz deleted'})
 }
 
-
-
-
-
-
-
-
-
-index = 0
-
-let DQN2
-length
-//unique Quiz
-exports.uniqueQuiz = async (req, res)=>{
-   const quizName = req.params.quizName;
-
-   try {
-    //find the quiz by database
-    const quiz = await QUIZ.findOne({username: req.session.user.username, 'quiz.name': quizName})
-
-    if(!quiz){
-        console.log('Quiz not found')
-    }
-
-    //load questions
-    const Questions = await Quiz.find({quizName: quizName})
-    if(!Questions){
-        console.log('No data retrievable')
-    }
-
-    //map the questions
-    const mapQuestions = Questions.map(question =>({
-        question: question.questions,
-        options: {
-            option1: question.option1,
-            option2: question.option2,
-            option3: question.option3,
-            option4: question.option4
-        },
-        answer: question.answer
-    }))
-
-    console.log(mapQuestions)
-    
-    const questionForRendering = mapQuestions.forEach((question, index)=>{
-       let sth = question.question
-       let sth2 = question.options
-       let sth3 = question.answer
-       arrayQ.push(sth) 
-       arrayA.push(sth2)
-       arrayS.push(sth3)
-    })
-    length = arrayQ.length 
-
-   //render the unique quiz page based on Quiz and questions
-   res.render('../views/uniqueQuiz.ejs', {
-         quizName: quizName,
-         question: questionForRendering[index].sth,
-         questionLength: arrayQ.length,
-         options: {
-              option1: arrayA[index].option1,
-              option2: arrayA[index].option2,
-              option3: arrayA[index].option3,
-              option4: arrayA[index].option4,
-         }
-   })
-
-   
-   DQN2 = quizName.quizName
-   index = 0
-   } catch (error) {
-    console.log('Error in finding quiz')
-    console.log(error)
-   }
-}
-
-exports.uniqueScoreHandler = async (req, res)=>{
-     
-    const answer = req.body
-   //question length 
-    const totalNumberQuestions = parseInt(length);
-    //send answer to array
-    answerArray.push(answer.answer)
-
-    
-    //crosscheck answer
-    const allQuestions = await Quiz.find({quizName: DQN})
-    const mapQuestions = allQuestions.map(question =>({
-        answer: question.answer
-    }))
-
-    //check if answer is correct
-    let strAnswer = String(answerArray[index])
-    let strAnswer2 = String(mapQuestions[index].answer)
-
-    console.log("strAnswer:", strAnswer);
-    console.log("strAnswer2:", strAnswer2);
-
-    if(strAnswer.trim() === strAnswer2.trim()){
-        console.log('Correct')
-        success.push('Correct')
-    }else{
-        console.log('Wrong')
-    }
-
-
-
-     //make sure index only adds according to question no
-     if(!index >= totalNumberQuestions){
-       //increment index
-       console.log('Not greater')
-     }
-    index = index + 1
-    
-    try {
-        let arrayQ = []
-        let arrayA = []
-        let arrayS = []
-        
-        //  //Load questions
-        const Questions = await Quiz.find({quizName: DQN})
-        if(!Questions){
-            console.log('No data retrievable')
-        }
-        //map the questions
-        const mapQuestions = Questions.map(question =>({
-            question: question.questions,
-            options: {
-                option1: question.option1,
-                option2: question.option2,
-                option3: question.option3,
-                option4: question.option4
-            },
-            answer: question.answer
-        }))
-    
-        console.log(mapQuestions)
-        
-        const questionForRendering = mapQuestions.forEach((question, index)=>{
-           let sth = question.question
-           let sth2 = question.options
-           let sth3 = question.answer
-           arrayQ.push(sth) 
-           arrayA.push(sth2)
-           arrayS.push(sth3)
-        })
-
-        console.log(questionForRendering)
-        try{
-            if(index >= arrayQ.length){
-                console.log('Exceeded number of questions')
-                return res.status(200).json({message: 'Quiz Ended', success: success.length, totalQNo: arrayQ.length, quizName: DQN})
-            }
-        }catch(error){
-            console.log('Error in index')
-        }
-        
-        console.log(success.length)
-        //send to client
-        res.status(200).json({ message: {
-            quizName: DQN,
-            question: arrayQ[index],
-            options: {
-                option1: arrayA[index].option1,
-                option2: arrayA[index].option2,
-                option3: arrayA[index].option3,
-                option4: arrayA[index].option4,
-            }
-        }
-        })
-    } catch (error) {
-        answerArray.length = 0
-        console.log('Quiz End')
-    }
-}
-
 //search logic
 exports.search = async (req, res)=>{
     const {search} = req.body
@@ -668,7 +493,7 @@ exports.search = async (req, res)=>{
         console.log('Search not received')
     }
     //find the quiz by database
-    const quiz = await QUIZ.find({username: req.session.user.username, 'quiz.name': {$regex: new RegExp(search, 'i')}})
+    const quiz = await QUIZ.find({'quiz.name': {$regex: new RegExp(search, 'i')}})
     if(!quiz){
         console.log('Quiz not found')
     }
