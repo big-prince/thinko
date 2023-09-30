@@ -257,6 +257,324 @@
             font-size: 20px;
         }
     
+
+
+    /* responsive styling */
+    @media (max-width: 768px) {
+        header {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+}
+
+.header-left {
+    margin-bottom: 10px;
+}
+
+.header-title {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.user-info {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.update-profile-button {
+    background: linear-gradient(160deg, #42abfb, #05518b);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+/* Custom styles for the main content */
+.content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.section-header {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 0;
+}
+
+/* Facebook-style search bar */
+.search-bar {
+    background-color: #f0f2f5;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    border: none;
+    background: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1rem;
+}
+
+.search-icon {
+    margin-right: 8px;
+    color: #777;
+}
+
+/* Quiz card */
+.quiz-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 0 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.quiz-card:hover {
+    transform: scale(1.05);
+}
+
+.quiz-card h3 {
+    font-size: 1.3rem;
+    margin: 0;
+    color: #333;
+}
+
+.quiz-card p {
+    color: #777;
+}
+
+/* Start Quiz Button */
+.start-quiz-button {
+    background: linear-gradient(160deg, #42abfb, #05518b);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s ease-in-out;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* New Quiz Button */
+.new-quiz-button {
+    background-color: #05518b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: monospace;
+    padding: 10px 20px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: center;
+    margin: 20px;
+}
+
+.new-quiz-button:hover {
+    background: linear-gradient(180deg, #42abfb, #05518b);
+}
+
+/* Line animation */
+.line-animation {
+    display: none; /* Hide the line animation on mobile */
+}
+
+/* Backdrop and Popup */
+.backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 9998;
+    display: none;
+}
+
+.popup {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    display: none;
+}
+
+/* Responsive styles for the quiz card */
+@media (max-width: 768px) {
+    .quiz-card {
+        padding: 10px;
+    }
+
+    .quiz-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .start-quiz-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+    }
+    /* Responsive styles for the header */
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 1.5rem;
+    }
+
+    .user-info {
+        font-size: 1rem;
+    }
+
+    .update-profile-button {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Responsive styles for the search bar */
+@media (max-width: 768px) {
+    .search-bar {
+        padding: 6px 12px;
+    }
+
+    .search-input {
+        font-size: 0.9rem;
+    }
+
+    .search-icon {
+        margin-right: 4px;
+    }
+}
+/* Responsive styles for the inner quiz part */
+@media (max-width: 768px) {
+    .quiz-container {
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        margin: 0;
+    }
+
+    .quiz-name {
+        font-size: 1.2rem;
+    }
+
+    .totalQuestions {
+        font-size: 0.9rem;
+    }
+
+    .quiz h3 {
+        font-size: 1rem;
+    }
+
+    .quiz-options {
+        margin-top: 10px;
+    }
+
+    .options {
+        margin-bottom: 10px;
+    }
+
+    .quiz-radio:checked + .quiz-label {
+        font-size: 1rem;
+    }
+
+    #nextQuestionButton {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    .score-container {
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        margin: 0;
+    }
+
+    .actual-score {
+        margin-top: 10px;
+    }
+
+    .actual-score h3 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+
+    .actual-score h3 span {
+        font-size: 1rem;
+    }
+
+    .endButton {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    .nq-container {
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        margin: 0;
+    }
+
+    .nq-container h1 {
+        font-size: 1.2rem;
+    }
+
+    .quiz-section {
+        margin-top: 10px;
+    }
+
+    .quizname label,
+    .quizdescription label,
+    .quiznumber label {
+        font-size: 0.9rem;
+    }
+
+    .quizname input,
+    .quizdescription input,
+    .quiznumber input {
+        font-size: 0.9rem;
+        padding: 8px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    #next-question,
+    #question-next {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    .created-alert h2 {
+        font-size: 1rem;
+    }
+}
     </style>
 </head>
 <body style="font-family: 'Young Serif', sans-serif;font-weight: 100;">
